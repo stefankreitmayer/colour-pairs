@@ -1,0 +1,25 @@
+.elm-center-text{
+  width: 90%;
+  max-width: 500px;
+  margin: 50px auto;
+}
+
+.elm-btn-large{
+  display: block;
+  width: 100%;
+  margin: 80px 0;
+  font-size: x-large;
+  color: rgba(255,255,255,.92);
+  border: none;
+  outline: none;
+}
+
+.elm-btn-instructions{
+  height: 2.5em;
+  background: #939;
+}
+
+.elm-btn-play{
+  height: 5em;
+  background: #393;
+}

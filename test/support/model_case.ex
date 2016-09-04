@@ -1,4 +1,4 @@
-defmodule ElmHeroku.ModelCase do
+defmodule MatchForever.ModelCase do
   @moduledoc """
   This module defines the test case to be used by
   model tests.
@@ -16,20 +16,20 @@ defmodule ElmHeroku.ModelCase do
 
   using do
     quote do
-      alias ElmHeroku.Repo
+      alias MatchForever.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import ElmHeroku.ModelCase
+      import MatchForever.ModelCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(ElmHeroku.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(MatchForever.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(ElmHeroku.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(MatchForever.Repo, {:shared, self()})
     end
 
     :ok
@@ -59,7 +59,7 @@ defmodule ElmHeroku.ModelCase do
   """
   def errors_on(struct, data) do
     struct.__struct__.changeset(struct, data)
-    |> Ecto.Changeset.traverse_errors(&ElmHeroku.ErrorHelpers.translate_error/1)
+    |> Ecto.Changeset.traverse_errors(&MatchForever.ErrorHelpers.translate_error/1)
     |> Enum.flat_map(fn {key, errors} -> for msg <- errors, do: {key, msg} end)
   end
 end

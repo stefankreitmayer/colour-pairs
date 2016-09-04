@@ -1,4 +1,4 @@
-defmodule ElmHeroku.ErrorHelpers do
+defmodule MatchForever.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -32,9 +32,9 @@ defmodule ElmHeroku.ErrorHelpers do
     #     dgettext "errors", "is invalid"
     #
     if count = opts[:count] do
-      Gettext.dngettext(ElmHeroku.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(MatchForever.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(ElmHeroku.Gettext, "errors", msg, opts)
+      Gettext.dgettext(MatchForever.Gettext, "errors", msg, opts)
     end
   end
 end

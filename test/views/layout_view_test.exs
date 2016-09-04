@@ -1,3 +1,3 @@
-defmodule ElmHeroku.LayoutViewTest do
-  use ElmHeroku.ConnCase, async: true
+defmodule MatchForever.LayoutViewTest do
+  use MatchForever.ConnCase, async: true
 end

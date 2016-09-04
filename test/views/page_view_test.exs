@@ -1,3 +1,3 @@
-defmodule ElmHeroku.PageViewTest do
-  use ElmHeroku.ConnCase, async: true
+defmodule MatchForever.PageViewTest do
+  use MatchForever.ConnCase, async: true
 end

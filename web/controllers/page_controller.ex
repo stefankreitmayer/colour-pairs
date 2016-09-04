@@ -1,5 +1,5 @@
-defmodule ElmHeroku.PageController do
-  use ElmHeroku.Web, :controller
+defmodule MatchForever.PageController do
+  use MatchForever.Web, :controller
 
   def index(conn, _params) do
     render conn, "index.html"

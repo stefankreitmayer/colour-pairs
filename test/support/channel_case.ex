@@ -1,4 +1,4 @@
-defmodule ElmHeroku.ChannelCase do
+defmodule MatchForever.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -20,22 +20,22 @@ defmodule ElmHeroku.ChannelCase do
       # Import conveniences for testing with channels
       use Phoenix.ChannelTest
 
-      alias ElmHeroku.Repo
+      alias MatchForever.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
 
 
       # The default endpoint for testing
-      @endpoint ElmHeroku.Endpoint
+      @endpoint MatchForever.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(ElmHeroku.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(MatchForever.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(ElmHeroku.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(MatchForever.Repo, {:shared, self()})
     end
 
     :ok

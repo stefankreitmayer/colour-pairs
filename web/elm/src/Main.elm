@@ -1,21 +1,41 @@
 module Main exposing (..)
 
 import Html exposing (Html)
-import Html.App as Html
+
+import Navigation
 
 import Model exposing (Model,initialModel)
-import Update exposing (update)
+import Model.Page exposing (Page(..))
+import Update exposing (update,urlUpdate)
 import View exposing (view)
-import Subscription exposing (subscriptions)
-
-
---------------------------------------------------------------------------- MAIN
+import Msg exposing (Msg,subscriptions)
 
 
 main : Program Never
 main =
-  Html.program
-  { init = (initialModel, Cmd.none)
-  , update = update
-  , view = view
-  , subscriptions = subscriptions }
+  Navigation.program urlParser
+    { init = init
+    , update = update
+    , urlUpdate = urlUpdate
+    , view = view
+    , subscriptions = subscriptions }
+
+
+init : Page -> (Model, Cmd Msg)
+init _ =
+  urlUpdate Home initialModel
+
+
+urlParser : Navigation.Parser Page
+urlParser =
+  Navigation.makeParser fromUrl
+
+
+fromUrl : Navigation.Location -> Page
+fromUrl location =
+  if location.pathname == "/play" then
+    Play
+  else if location.pathname == "/instructions" then
+    Instructions
+  else
+    Home

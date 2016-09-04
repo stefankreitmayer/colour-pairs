@@ -1,5 +1,5 @@
-defmodule ElmHeroku.PageControllerTest do
-  use ElmHeroku.ConnCase
+defmodule MatchForever.PageControllerTest do
+  use MatchForever.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get conn, "/"

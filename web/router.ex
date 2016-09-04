@@ -1,5 +1,5 @@
-defmodule ElmHeroku.Router do
-  use ElmHeroku.Web, :router
+defmodule MatchForever.Router do
+  use MatchForever.Web, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,14 +13,16 @@ defmodule ElmHeroku.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", ElmHeroku do
+  scope "/", MatchForever do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/instructions", PageController, :index
+    get "/play", PageController, :index
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", ElmHeroku do
+  # scope "/api", MatchForever do
   #   pipe_through :api
   # end
 end

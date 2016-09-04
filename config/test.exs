@@ -2,7 +2,7 @@ use Mix.Config
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :elm_heroku, ElmHeroku.Endpoint,
+config :match_forever, MatchForever.Endpoint,
   http: [port: 4001],
   server: false
 
@@ -10,10 +10,10 @@ config :elm_heroku, ElmHeroku.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-config :elm_heroku, ElmHeroku.Repo,
+config :match_forever, MatchForever.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
-  database: "elm_heroku_test",
+  database: "match_forever_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

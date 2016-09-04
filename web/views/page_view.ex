@@ -1,3 +1,3 @@
-defmodule ElmHeroku.PageView do
-  use ElmHeroku.Web, :view
+defmodule MatchForever.PageView do
+  use MatchForever.Web, :view
 end
