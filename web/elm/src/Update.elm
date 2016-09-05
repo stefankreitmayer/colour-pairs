@@ -33,6 +33,7 @@ update action model =
 urlUpdate : Page -> Model -> (Model, Cmd Msg)
 urlUpdate page model =
   let
-      model' = { model | currentPage = page }
+      model' = { model | currentPage = page
+                       , cards = [ Card 1, Card 2, Card 3 ] }
   in
       (model', Cmd.none)

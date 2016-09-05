@@ -14,14 +14,26 @@ import Update exposing (update,urlUpdate)
 testUpdate : Test
 testUpdate =
   describe "update"
-    [ test "navigate to Play" <| \() -> testNavigateToPlay
+    [ test "navigate to Play" <| \() ->
+        let
+            (model',_) = urlUpdate Play initialModel
+        in
+            model'.currentPage
+            |> Expect.equal Play
+    , describe "new game" describeNewGame
     ]
 
 
-testNavigateToPlay : Expectation
-testNavigateToPlay =
+describeNewGame : List Test
+describeNewGame =
   let
-      (model',_) = urlUpdate Play initialModel
+      newGame = urlUpdate Play initialModel
   in
-      model'.currentPage
-      |> Expect.equal Play
+      [ test "starts with three cards" <| \() ->
+          let
+              (model',_) = newGame
+          in
+              model'.cards
+              |> List.length
+              |> Expect.equal 3
+      ]
