@@ -34,20 +34,46 @@ update action model =
       let
           cards' = updateOneCard key (\card -> { card | selected = True } ) model.cards
           selectedCards = cards' |> Dict.filter (\_ card -> card.selected)
-          cards'' =
+          (cards'', nextRoundDue) =
             if isIdenticalPair selectedCards then
-              cards'
-              |> Dict.map
-                   (\_ card -> { card | position = if card.selected then (0.5, 0.5) else card.position })
+              (cards'
+               |> Dict.map
+                    (\_ card -> { card | position = if card.selected then (0.5, 0.5) else card.position })
+              , Just (model.currentTime + 2000))
             else
-              cards'
+              (cards', Nothing)
       in
-      ({ model | cards = cards'' }, Cmd.none)
+          ({ model
+           | cards = cards''
+           , nextRoundDue = nextRoundDue }
+          , Cmd.none)
 
     UnselectCard key ->
       ({ model
          | cards = updateOneCard key (\card -> { card | selected = False } ) model.cards }
       , Cmd.none)
+
+    Tick currentTime ->
+      let
+          isDue =
+            case model.nextRoundDue of
+              Nothing ->
+                False
+
+              Just oldDueTime ->
+                currentTime >= oldDueTime
+          (nextRoundDue',cards') =
+            if isDue then
+              (Nothing, createCards [ "C", "D", "D" ])
+            else
+              (model.nextRoundDue, model.cards)
+          model' =
+            { model
+            | currentTime = currentTime
+            , nextRoundDue = nextRoundDue'
+            , cards = cards' }
+      in
+          (model', Cmd.none)
 
 
 urlUpdate : Page -> Model -> (Model, Cmd Msg)

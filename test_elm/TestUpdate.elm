@@ -13,13 +13,6 @@ import Msg exposing (Msg(..))
 import Update exposing (update,urlUpdate)
 
 
-newGame =
-  let
-      (model,_) = urlUpdate Play initialModel
-  in
-      model
-
-
 testUpdate : Test
 testUpdate =
   describe "update"
@@ -78,7 +71,8 @@ describeGame =
             |> Dict.insert 0 card0
             |> Dict.insert 1 card1
             |> Dict.insert 2 card2
-          model = { newGame | cards = cards }
+          currentTime = 1000.0
+          model = { newGame | cards = cards, currentTime = currentTime }
           action = SelectCard 2
           (model',_) = model |> update action
           expectedCards =
@@ -90,6 +84,78 @@ describeGame =
           [ test "moves the pair to the screen center" <| \() ->
               model'.cards
               |> Expect.equal expectedCards
+
+          , test "schedules next round" <| \() ->
+              model'.nextRoundDue
+              |> Expect.equal (Just (currentTime + 2000))
           ]
       )
+
+  , describe "new round"
+      [ test "doesn't start unless scheduled" <| \() ->
+          let
+              model = { newGame | nextRoundDue = Nothing }
+              action = Tick 5000
+              (model',_) = model |> update action
+          in
+              model'.nextRoundDue
+              |> Expect.equal model.nextRoundDue
+
+      , test "doesn't start unless due" <| \() ->
+          let
+              model = { newGame | nextRoundDue = Just 5000 }
+              action = Tick 4000
+              (model',_) = model |> update action
+          in
+              model'.nextRoundDue
+              |> Expect.equal model.nextRoundDue
+
+      , describe "when due"
+          (
+            let
+                model = { newGame | nextRoundDue = Just 5000 }
+                action = Tick 5000
+                (model',_) = model |> update action
+            in
+                [ test "clears the scheduling" <| \() ->
+                    model'.nextRoundDue
+                    |> Expect.equal Nothing
+
+                , test "changes the cards" <| \() ->
+                    model'.cards
+                    |> Expect.notEqual model.cards
+
+                , describe "new set of card"
+                    [ test "contains at least one matching pair" <| \() ->
+                        model'.cards
+                        |> Dict.values
+                        |> hasMatchingPair
+                        |> Expect.true "Expected True"
+                    ]
+                ]
+          )
+      ]
   ]
+
+
+-- Helpers
+
+
+newGame =
+  let
+      (model,_) = urlUpdate Play initialModel
+  in
+      model
+
+
+hasMatchingPair : List Card -> Bool
+hasMatchingPair cards =
+  case cards of
+    hd::tl ->
+      if List.any (\card -> card.content == hd.content) tl then
+        True
+      else
+        hasMatchingPair tl
+
+    _ ->
+      False
