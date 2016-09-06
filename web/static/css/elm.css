@@ -23,3 +23,16 @@
   height: 5em;
   background: #393;
 }
+
+.elm-card{
+  height: 3em;
+  width: 3em;
+  border-radius: 1.5em;
+  background: none;
+  border: 1px solid grey;
+  text-align: center;
+}
+
+.elm-card-selected{
+  background: blue;
+}

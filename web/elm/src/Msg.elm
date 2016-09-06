@@ -8,6 +8,9 @@ import Model.Page exposing (Page(..))
 
 type Msg
   = Navigate Page
+  | SelectCard Int
+  | UnselectCard Int
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =

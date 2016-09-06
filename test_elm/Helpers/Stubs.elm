@@ -1,6 +1,12 @@
 module Helpers.Stubs exposing (..)
 
-import Model
+import Dict exposing (Dict)
+
+import Model exposing (Card)
 
 
-dummyPacifier = 0 -- Elm module needs at least one function
+stubCards : List (Int, String, Bool) -> Dict Int Card
+stubCards list =
+  list
+  |> List.map (\(key, content, selected) -> (key, Card content selected))
+  |> Dict.fromList

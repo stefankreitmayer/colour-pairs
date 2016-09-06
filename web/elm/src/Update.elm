@@ -1,5 +1,6 @@
 module Update exposing (..)
 
+import Dict exposing (Dict)
 import Task
 import Navigation
 
@@ -29,11 +30,50 @@ update action model =
       in
           (model', Navigation.newUrl pathname)
 
+    SelectCard key ->
+      ({ model
+         | cards = updateOneCard key (\card -> { card | selected = True } ) model.cards }
+      , Cmd.none)
+
+    UnselectCard key ->
+      ({ model
+         | cards = updateOneCard key (\card -> { card | selected = False } ) model.cards }
+      , Cmd.none)
+
 
 urlUpdate : Page -> Model -> (Model, Cmd Msg)
 urlUpdate page model =
-  let
-      model' = { model | currentPage = page
-                       , cards = [ Card 1, Card 2, Card 3 ] }
-  in
-      (model', Cmd.none)
+  case page of
+    Play ->
+      let
+          model' = { model | currentPage = page
+                           , cards = createCards [ "A", "B", "A" ] }
+      in
+          (model', Cmd.none)
+
+    _ ->
+      (model, Cmd.none)
+
+
+createCards : List String -> Dict Int Card
+createCards values =
+  values
+  |> List.indexedMap (,)
+  |> List.foldl
+       (\(index,content) dict -> dict |> Dict.insert index (Card content False))
+       Dict.empty
+
+
+updateOneCard : Int -> (Card -> Card) -> Dict Int Card -> Dict Int Card
+updateOneCard key transformation cards =
+  Dict.update
+    key
+    (\maybeCard ->
+      case maybeCard of
+        Nothing ->
+          Nothing
+
+        Just card ->
+          Just (card |> transformation)
+    )
+    cards

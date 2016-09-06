@@ -1,19 +1,21 @@
 module Model exposing (..)
 
+import Dict exposing (Dict)
 import Date exposing (Date)
 
 import Model.Page exposing (Page(..))
 
 type alias Model =
   { currentPage : Page
-  , cards : List Card }
+  , cards : Dict Int Card }
 
 
 type alias Card =
-  { number : Int }
+  { content : String
+  , selected : Bool }
 
 
 initialModel : Model
 initialModel =
   { currentPage = Home
-  , cards = [] }
+  , cards = Dict.empty }
