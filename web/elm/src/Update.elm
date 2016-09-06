@@ -1,4 +1,4 @@
-module Update exposing (..)
+module Update exposing (update, urlUpdate)
 
 import Dict exposing (Dict)
 import Task
@@ -31,9 +31,18 @@ update action model =
           (model', Navigation.newUrl pathname)
 
     SelectCard key ->
-      ({ model
-         | cards = updateOneCard key (\card -> { card | selected = True } ) model.cards }
-      , Cmd.none)
+      let
+          cards' = updateOneCard key (\card -> { card | selected = True } ) model.cards
+          selectedCards = cards' |> Dict.filter (\_ card -> card.selected)
+          cards'' =
+            if isIdenticalPair selectedCards then
+              cards'
+              |> Dict.map
+                   (\_ card -> { card | position = if card.selected then (0.5, 0.5) else card.position })
+            else
+              cards'
+      in
+      ({ model | cards = cards'' }, Cmd.none)
 
     UnselectCard key ->
       ({ model
@@ -60,7 +69,7 @@ createCards values =
   values
   |> List.indexedMap (,)
   |> List.foldl
-       (\(index,content) dict -> dict |> Dict.insert index (Card content False))
+       (\(index,content) dict -> dict |> Dict.insert index (Card content False (0.1, 0.1 + 0.8 * (index |> toFloat) / ((List.length values)-1 |> toFloat))))
        Dict.empty
 
 
