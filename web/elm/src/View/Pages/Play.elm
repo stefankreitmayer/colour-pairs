@@ -15,10 +15,16 @@ import Msg exposing (..)
 
 view : Model -> Html Msg
 view model =
-  Html.Keyed.node
-    "div"
-    []
-    [ (model.roundCounter |> toString, renderCards model) ]
+  let
+      htmlKey = model.roundCounter |> toString
+      children =
+        [ div [ class "elm-fullscreen-background" ] []
+        , renderCards model ]
+  in
+      Html.Keyed.node
+        "div"
+        []
+        [ (htmlKey, div [] children ) ]
 
 
 renderCards : Model -> Html Msg

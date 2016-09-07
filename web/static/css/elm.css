@@ -26,24 +26,31 @@
 
 .elm-card{
   position: absolute;
-  height: 3em;
-  width: 3em;
-  border-radius: 1.5em;
-  background: none;
-  border: 1px solid grey;
-  text-align: center;
+  height: 12vh;
+  width: 12vh;
+  transform: translate(-6vh,-6vh);
+  border-radius: 6vh;
   transition: top 1s, left 1s;
 }
 
 .elm-card-selected{
-  background: blue;
-  height: 4em;
-  width: 4em;
-  border-radius: 2em;
+  height: 16vh;
+  width: 16vh;
+  transform: translate(-8vh,-8vh);
+  border-radius: 8vh;
 }
 
 .elm-card-fadeout{
   opacity: 0;
   transition: opacity .7s;
   transition-delay: 1.3s;
+}
+
+.elm-fullscreen-background{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: white;
 }

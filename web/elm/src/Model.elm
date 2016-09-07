@@ -98,7 +98,7 @@ newCards randomSeed roundCounter =
                     (Card
                      content
                      False
-                     (0.1, 0.1 + 0.8 * (index |> toFloat) / (nCards-1 |> toFloat))
+                     (if index < nCards//2 then 0.15 else 0.85, 0.15 + 0.7 * (index % (nCards//2) |> toFloat) / (nCards//2-1 |> toFloat))
                      False)
              )
              Dict.empty
