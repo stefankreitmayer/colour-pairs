@@ -25,12 +25,14 @@
 }
 
 .elm-card{
+  position: absolute;
   height: 3em;
   width: 3em;
   border-radius: 1.5em;
   background: none;
   border: 1px solid grey;
   text-align: center;
+  transition: top 1s, left 1s;
 }
 
 .elm-card-selected{
