@@ -3,6 +3,7 @@ module Model exposing (..)
 import Dict exposing (Dict)
 import Date exposing (Date)
 import Time exposing (Time)
+import String
 
 import Model.Page exposing (Page(..))
 
@@ -30,19 +31,31 @@ initialModel =
   , currentTime = 0
   , nextRoundDue = Nothing
   , roundCounter = 0
-  , cards = newCards 0 0 }
+  , cards = newCards 222 0 }
 
 
 pauseBetweenRounds : Time
 pauseBetweenRounds = 3000
 
 
-randomInts : Int -> Int -> Int -> List Int
-randomInts seed n upperLimit =
+randomColors : Int -> Int -> List String
+randomColors seed n =
   if n<=0 then
     []
   else
-    (randomInt seed upperLimit) :: (randomInts ((seed+123456789) % 900719925474099) (n-1) upperLimit)
+    (randomColor seed) :: (randomColors ((seed+123456789) % 900719925474099) (n-1))
+
+
+randomColor : Int -> String
+randomColor seed =
+  let
+      values =
+        [ randomInt seed 256
+        , randomInt (seed//2) 256
+        , randomInt (seed//3) 256 ]
+        |> List.map toString
+  in
+      "rgb(" ++ (String.join "," values) ++ ")"
 
 
 randomInt : Int -> Int -> Int
@@ -68,8 +81,7 @@ newCards randomSeed roundCounter =
   let
       nCards = roundCounter // 2 * 2 + 4
       uniqueContents =
-        randomInts randomSeed (nCards-1) 1000
-        |> List.map toString
+        randomColors randomSeed (nCards-1)
       duplicate = List.take 1 uniqueContents
       allContents =
         uniqueContents
@@ -84,7 +96,7 @@ newCards randomSeed roundCounter =
                result
                |> Dict.insert index
                     (Card
-                     (content |> toString)
+                     content
                      False
                      (0.1, 0.1 + 0.8 * (index |> toFloat) / (nCards-1 |> toFloat))
                      False)

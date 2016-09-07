@@ -40,12 +40,14 @@ renderCard (key, card) =
             , ("elm-card-selected", card.selected) ]
         , Html.Attributes.style
             [ ("top", posY |> toPercent)
-            , ("left", posX |> toPercent) ]
+            , ("left", posX |> toPercent)
+            , ("background", card.content)
+            ]
         ] ++ (if card.selected then [] else [ onClick (SelectCard key) ])
   in
       div
         attrs
-        [ text card.content ]
+        []
 
 
 toPercent : Float -> String
