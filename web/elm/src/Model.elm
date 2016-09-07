@@ -39,3 +39,7 @@ isIdenticalPair cards =
 
     _ ->
       False
+
+
+pauseBetweenRounds : Time
+pauseBetweenRounds = 3000

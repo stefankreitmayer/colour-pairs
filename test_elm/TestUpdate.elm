@@ -87,7 +87,7 @@ describeGame =
 
           , test "schedules next round" <| \() ->
               model'.nextRoundDue
-              |> Expect.equal (Just (currentTime + 2000))
+              |> Expect.equal (Just (currentTime + pauseBetweenRounds))
           ]
       )
 

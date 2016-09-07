@@ -41,7 +41,7 @@ update action model =
                     (\_ card -> { card
                                 | position = if card.selected then (0.5, 0.5) else card.position
                                 , fadeout = not card.selected })
-              , Just (model.currentTime + 2000))
+              , Just (model.currentTime + pauseBetweenRounds))
             else
               (cards', Nothing)
       in
