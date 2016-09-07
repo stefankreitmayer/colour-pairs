@@ -27,26 +27,26 @@ testModel =
             |> Expect.false "Two cards expected"
         , test "one Card" <| \() ->
             Dict.empty
-            |> Dict.insert 0 (Card "A" False (0,0))
+            |> Dict.insert 0 (Card "A" False (0,0) False)
             |> isIdenticalPair
             |> Expect.false "Expected False"
         , test "two Cards with identical content" <| \() ->
             Dict.empty
-            |> Dict.insert 0 (Card "A" False (0,0))
-            |> Dict.insert 1 (Card "A" True (1,1))
+            |> Dict.insert 0 (Card "A" False (0,0) False)
+            |> Dict.insert 1 (Card "A" True (1,1) False)
             |> isIdenticalPair
             |> Expect.true "Expected True"
         , test "two Cards with different content" <| \() ->
             Dict.empty
-            |> Dict.insert 0 (Card "A" False (0,0))
-            |> Dict.insert 1 (Card "B" False (0,0))
+            |> Dict.insert 0 (Card "A" False (0,0) False)
+            |> Dict.insert 1 (Card "B" False (0,0) False)
             |> isIdenticalPair
             |> Expect.false "Expected False"
         , test "three Cards" <| \() ->
             Dict.empty
-            |> Dict.insert 0 (Card "A" False (0,0))
-            |> Dict.insert 1 (Card "A" False (0,0))
-            |> Dict.insert 2 (Card "A" False (0,0))
+            |> Dict.insert 0 (Card "A" False (0,0) False)
+            |> Dict.insert 1 (Card "A" False (0,0) False)
+            |> Dict.insert 2 (Card "A" False (0,0) False)
             |> isIdenticalPair
             |> Expect.false "Expected False"
         ]

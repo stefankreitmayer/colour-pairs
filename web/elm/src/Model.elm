@@ -16,7 +16,8 @@ type alias Model =
 type alias Card =
   { content : String
   , selected : Bool
-  , position : Vector }
+  , position : Vector
+  , fadeout : Bool }
 
 
 type alias Vector = (Float,Float)

@@ -43,6 +43,7 @@ renderCard (key, card) =
       attrs =
         [ classList
             [ ("elm-card", True)
+            , ("elm-card-fadeout", card.fadeout)
             , ("elm-card-selected", card.selected) ]
         , Html.Attributes.style
             [ ("top", posY |> toPercent)

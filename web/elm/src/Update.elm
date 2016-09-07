@@ -38,7 +38,9 @@ update action model =
             if isIdenticalPair selectedCards then
               (cards'
                |> Dict.map
-                    (\_ card -> { card | position = if card.selected then (0.5, 0.5) else card.position })
+                    (\_ card -> { card
+                                | position = if card.selected then (0.5, 0.5) else card.position
+                                , fadeout = not card.selected })
               , Just (model.currentTime + 2000))
             else
               (cards', Nothing)
@@ -95,7 +97,13 @@ createCards values =
   values
   |> List.indexedMap (,)
   |> List.foldl
-       (\(index,content) dict -> dict |> Dict.insert index (Card content False (0.1, 0.1 + 0.8 * (index |> toFloat) / ((List.length values)-1 |> toFloat))))
+       (\(index,content) dict -> dict |> Dict.insert index
+                                           (Card
+                                              content
+                                              False
+                                              (0.1, 0.1 + 0.8 * (index |> toFloat) / ((List.length values)-1 |> toFloat))
+                                              False)
+       )
        Dict.empty
 
 

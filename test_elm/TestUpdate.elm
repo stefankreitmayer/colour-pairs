@@ -63,9 +63,9 @@ describeGame =
   , describe "selecting a matching pair"
       (
       let
-          card0 = Card "A" True (0,0)
-          card1 = Card "B" False (0,0)
-          card2 = Card "A" False (0,0)
+          card0 = Card "A" True (0,0) False
+          card1 = Card "B" False (0,0) False
+          card2 = Card "A" False (0,0) False
           cards =
             Dict.empty
             |> Dict.insert 0 card0
@@ -78,7 +78,7 @@ describeGame =
           expectedCards =
             Dict.empty
             |> Dict.insert 0 { card0 | position = (0.5,0.5) }
-            |> Dict.insert 1 card1
+            |> Dict.insert 1 { card1 | fadeout = True }
             |> Dict.insert 2 { card2 | position = (0.5,0.5), selected = True }
       in
           [ test "moves the pair to the screen center" <| \() ->
