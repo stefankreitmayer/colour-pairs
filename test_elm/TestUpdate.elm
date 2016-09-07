@@ -121,6 +121,10 @@ describeGame =
                     model'.nextRoundDue
                     |> Expect.equal Nothing
 
+                , test "increases the round number" <| \() ->
+                    model'.roundCounter
+                    |> Expect.equal 1
+
                 , test "changes the cards" <| \() ->
                     model'.cards
                     |> Expect.notEqual model.cards

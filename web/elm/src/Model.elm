@@ -10,6 +10,7 @@ type alias Model =
   { currentPage : Page
   , currentTime : Time
   , nextRoundDue : Maybe Time
+  , roundCounter : Int
   , cards : Dict Int Card }
 
 
@@ -28,6 +29,7 @@ initialModel =
   { currentPage = Home
   , currentTime = 0
   , nextRoundDue = Nothing
+  , roundCounter = 0
   , cards = Dict.empty }
 
 

@@ -64,15 +64,16 @@ update action model =
 
               Just oldDueTime ->
                 currentTime >= oldDueTime
-          (nextRoundDue',cards') =
+          (nextRoundDue', cards', roundCounter') =
             if isDue then
-              (Nothing, createCards [ "C", "D", "D" ])
+              (Nothing, createCards [ "C", "D", "D" ], model.roundCounter + 1)
             else
-              (model.nextRoundDue, model.cards)
+              (model.nextRoundDue, model.cards, model.roundCounter)
           model' =
             { model
             | currentTime = currentTime
             , nextRoundDue = nextRoundDue'
+            , roundCounter = roundCounter'
             , cards = cards' }
       in
           (model', Cmd.none)

@@ -15,17 +15,10 @@ import Msg exposing (..)
 
 view : Model -> Html Msg
 view model =
-  let
-      domKey =
-        model.cards
-        |> Dict.values
-        |> List.map .content
-        |> String.join ","
-  in
-      Html.Keyed.node
-        "div"
-        []
-        [ (domKey, renderCards model) ]
+  Html.Keyed.node
+    "div"
+    []
+    [ (model.roundCounter |> toString, renderCards model) ]
 
 
 renderCards : Model -> Html Msg
