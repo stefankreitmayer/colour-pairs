@@ -29,14 +29,7 @@ testUpdate =
 
 describeGame : List Test
 describeGame =
-  [ test "starts with 3 cards, none selected" <| \() ->
-      let
-          cards = newGame.cards
-      in
-          (Dict.size cards, Dict.values cards |> List.any .selected)
-          |> Expect.equal (3,False)
-
-  , test "select a card" <| \() ->
+  [ test "select a card" <| \() ->
       let
           model =
             { newGame
@@ -128,14 +121,6 @@ describeGame =
                 , test "changes the cards" <| \() ->
                     model'.cards
                     |> Expect.notEqual model.cards
-
-                , describe "new set of card"
-                    [ test "contains at least one matching pair" <| \() ->
-                        model'.cards
-                        |> Dict.values
-                        |> hasMatchingPair
-                        |> Expect.true "Expected True"
-                    ]
                 ]
           )
       ]
@@ -150,16 +135,3 @@ newGame =
       (model,_) = urlUpdate Play initialModel
   in
       model
-
-
-hasMatchingPair : List Card -> Bool
-hasMatchingPair cards =
-  case cards of
-    hd::tl ->
-      if List.any (\card -> card.content == hd.content) tl then
-        True
-      else
-        hasMatchingPair tl
-
-    _ ->
-      False

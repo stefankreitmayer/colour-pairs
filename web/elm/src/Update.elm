@@ -2,6 +2,7 @@ module Update exposing (update, urlUpdate)
 
 import Dict exposing (Dict)
 import Task
+import Random
 import Navigation
 
 import Model exposing (..)
@@ -35,7 +36,7 @@ update action model =
           cards' = updateOneCard key (\card -> { card | selected = True } ) model.cards
           selectedCards = cards' |> Dict.filter (\_ card -> card.selected)
           (cards'', nextRoundDue) =
-            if isIdenticalPair selectedCards then
+            if isMatchingPair selectedCards then
               (cards'
                |> Dict.map
                     (\_ card -> { card
@@ -64,11 +65,13 @@ update action model =
 
               Just oldDueTime ->
                 currentTime >= oldDueTime
-          (nextRoundDue', cards', roundCounter') =
+
+          (nextRoundDue', roundCounter', cards') =
             if isDue then
-              (Nothing, createCards [ "C", "D", "D" ], model.roundCounter + 1)
+              (Nothing, model.roundCounter + 1, newCards (currentTime/100 |> floor) model.roundCounter)
             else
-              (model.nextRoundDue, model.cards, model.roundCounter)
+              (model.nextRoundDue, model.roundCounter, model.cards)
+
           model' =
             { model
             | currentTime = currentTime
@@ -84,28 +87,13 @@ urlUpdate page model =
   case page of
     Play ->
       let
-          model' = { model | currentPage = page
-                           , cards = createCards [ "A", "B", "A" ] }
+          model' = { initialModel
+                   | currentPage = page }
       in
           (model', Cmd.none)
 
     _ ->
       (model, Cmd.none)
-
-
-createCards : List String -> Dict Int Card
-createCards values =
-  values
-  |> List.indexedMap (,)
-  |> List.foldl
-       (\(index,content) dict -> dict |> Dict.insert index
-                                           (Card
-                                              content
-                                              False
-                                              (0.1, 0.1 + 0.8 * (index |> toFloat) / ((List.length values)-1 |> toFloat))
-                                              False)
-       )
-       Dict.empty
 
 
 updateOneCard : Int -> (Card -> Card) -> Dict Int Card -> Dict Int Card
