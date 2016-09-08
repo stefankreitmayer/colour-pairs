@@ -8,7 +8,8 @@ import Helpers.Stubs exposing (..)
 import Dict exposing (Dict)
 
 import Model exposing (..)
-import Model.Page exposing (Page(..))
+import Model.Url exposing (Url(..))
+import Model.Screen exposing (Screen(..))
 import Msg exposing (Msg(..))
 import Touch exposing (..)
 import Update exposing (update,urlUpdate)
@@ -17,11 +18,20 @@ import Update exposing (update,urlUpdate)
 testUpdate : Test
 testUpdate =
   describe "update"
-    [ test "navigate to Play" <| \() ->
+    [ test "navigate to Home" <| \() ->
         let
-            (model',_) = urlUpdate Play initialModel
+            (model',_) = urlUpdate Home initialModel
         in
-            model'.currentPage
+            model'.currentUrl
+            |> Expect.equal Home
+
+    , test "start game" <| \() ->
+        let
+            (model', _) =
+              initialModel
+              |> update StartGame
+        in
+            model'.currentScreen
             |> Expect.equal Play
 
     , describe "Game" describeGame
@@ -131,8 +141,11 @@ describeGame =
 -- Helpers
 
 
+newGame : Model
 newGame =
   let
-      (model,_) = urlUpdate Play initialModel
+      (model', _) =
+        initialModel
+        |> update StartGame
   in
-      model
+      model'

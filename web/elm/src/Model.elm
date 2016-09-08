@@ -5,10 +5,12 @@ import Date exposing (Date)
 import Time exposing (Time)
 import String
 
-import Model.Page exposing (Page(..))
+import Model.Url exposing (Url(..))
+import Model.Screen exposing (Screen(..))
 
 type alias Model =
-  { currentPage : Page
+  { currentUrl : Url
+  , currentScreen : Screen
   , assumeBrowserIsMobile : Bool
   , currentTime : Time
   , nextRoundDue : Maybe Time
@@ -28,7 +30,8 @@ type alias Vector = (Float,Float)
 
 initialModel : Model
 initialModel =
-  { currentPage = Home
+  { currentUrl = Home
+  , currentScreen = Welcome
   , assumeBrowserIsMobile = False
   , currentTime = 0
   , nextRoundDue = Nothing

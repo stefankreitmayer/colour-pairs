@@ -4,12 +4,14 @@ import Http exposing (..)
 import Time exposing (Time)
 
 import Model exposing (..)
-import Model.Page exposing (Page(..))
+import Model.Screen exposing (Screen(..))
+import Model.Url exposing (Url(..))
 import Touch exposing (..)
 
 
 type Msg
-  = Navigate Page
+  = Navigate Url
+  | StartGame
   | ChangeSelection Int Bool EventOrigin
   | Tick Time
 

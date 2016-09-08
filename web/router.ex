@@ -17,8 +17,6 @@ defmodule MatchForever.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    get "/instructions", PageController, :index
-    get "/play", PageController, :index
   end
 
   # Other scopes may use custom stacks.

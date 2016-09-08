@@ -4,21 +4,17 @@ import Html exposing (Html,div)
 import Html.Attributes exposing (class)
 
 import Model exposing (..)
-import Model.Page exposing (Page(..))
-import View.Pages.Home
-import View.Pages.Play
-import View.Pages.Instructions
+import Model.Screen exposing (Screen(..))
+import View.Screens.Welcome
+import View.Screens.Play
 import Msg exposing (..)
 
 
 view : Model -> Html Msg
-view ({currentPage} as model) =
-  case currentPage of
-    Home ->
-      View.Pages.Home.view model
-
-    Instructions ->
-      View.Pages.Instructions.view model
+view ({currentScreen} as model) =
+  case currentScreen of
+    Welcome ->
+      View.Screens.Welcome.view model
 
     Play ->
-      View.Pages.Play.view model
+      View.Screens.Play.view model

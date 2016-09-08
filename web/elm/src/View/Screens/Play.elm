@@ -1,4 +1,4 @@
-module View.Pages.Play exposing (view)
+module View.Screens.Play exposing (view)
 
 import Html exposing (Html,div)
 import Html.Attributes exposing (class,classList)
@@ -8,7 +8,6 @@ import Dict exposing (Dict)
 import String
 
 import Model exposing (..)
-import Model.Page exposing (Page(..))
 import View.Common exposing (..)
 import Msg exposing (..)
 import Touch exposing (..)

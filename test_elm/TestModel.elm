@@ -8,7 +8,7 @@ import Dict exposing (Dict)
 import Helpers.Stubs exposing (..)
 
 import Model exposing (..)
-import Model.Page exposing (Page(..))
+import Model.Screen exposing (Screen(..))
 
 
 
@@ -16,8 +16,8 @@ testModel : Test
 testModel =
   describe "Model"
     [ describe "initialModel"
-        [ test "starts on home page" <| \() ->
-            initialModel.currentPage |> Expect.equal Home
+        [ test "starts on welcome screen" <| \() ->
+            initialModel.currentScreen |> Expect.equal Welcome
 
         , test "starts with 4 cards" <| \() ->
             initialModel.cards

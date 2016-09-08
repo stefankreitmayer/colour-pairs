@@ -6,7 +6,8 @@ import Random
 import Navigation
 
 import Model exposing (..)
-import Model.Page exposing (Page(..))
+import Model.Url exposing (Url(..))
+import Model.Screen exposing (Screen(..))
 import Msg exposing (..)
 import Touch exposing (..)
 
@@ -16,21 +17,18 @@ import Debug exposing (log)
 update : Msg -> Model -> (Model, Cmd Msg)
 update action model =
   case action of
-    Navigate page ->
+    Navigate url ->
       let
           pathname =
-            case page of
+            case url of
               Home ->
                 "/"
-
-              Instructions ->
-                "/instructions"
-
-              Play ->
-                "/play"
-          model' = { model | currentPage = page }
+          model' = { model | currentUrl = url }
       in
           (model', Navigation.newUrl pathname)
+
+    StartGame ->
+      ({ initialModel | currentScreen = Play }, Cmd.none)
 
     ChangeSelection key state eventOrigin ->
       let
@@ -76,17 +74,10 @@ update action model =
           (model', Cmd.none)
 
 
-urlUpdate : Page -> Model -> (Model, Cmd Msg)
-urlUpdate page model =
-  case page of
-    Play ->
-      let
-          model' = { initialModel
-                   | currentPage = page }
-      in
-          (model', Cmd.none)
-
-    _ ->
+urlUpdate : Url -> Model -> (Model, Cmd Msg)
+urlUpdate url model =
+  case url of
+    Home ->
       (model, Cmd.none)
 
 

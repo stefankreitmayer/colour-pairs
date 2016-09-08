@@ -5,7 +5,7 @@ import Html exposing (Html)
 import Navigation
 
 import Model exposing (Model,initialModel)
-import Model.Page exposing (Page(..))
+import Model.Url exposing (Url(..))
 import Update exposing (update,urlUpdate)
 import View exposing (view)
 import Msg exposing (Msg,subscriptions)
@@ -21,21 +21,16 @@ main =
     , subscriptions = subscriptions }
 
 
-init : Page -> (Model, Cmd Msg)
+init : Url -> (Model, Cmd Msg)
 init _ =
   urlUpdate Home initialModel
 
 
-urlParser : Navigation.Parser Page
+urlParser : Navigation.Parser Url
 urlParser =
   Navigation.makeParser fromUrl
 
 
-fromUrl : Navigation.Location -> Page
-fromUrl location =
-  if location.pathname == "/play" then
-    Play
-  else if location.pathname == "/instructions" then
-    Instructions
-  else
-    Home
+fromUrl : Navigation.Location -> Url
+fromUrl _ =
+  Home
