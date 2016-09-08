@@ -14,8 +14,12 @@ randomColor seed =
       red = seed |> MiniRandom.nextInt 256
       green = red |> MiniRandom.nextInt 256
       blue = green |> MiniRandom.nextInt 256
+      brightness = red + green + blue
   in
-      Color.rgb red green blue
+      if brightness < 3*240 then
+        Color.rgb red green blue
+      else
+        randomColor (MiniRandom.step seed)
 
 
 randomPalette : Int -> Int -> Float -> List Color
