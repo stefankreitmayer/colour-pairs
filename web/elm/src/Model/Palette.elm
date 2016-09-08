@@ -20,18 +20,23 @@ randomColor seed =
 
 randomPalette : Int -> Int -> Float -> List Color
 randomPalette n seed targetQuality =
-  if n <= 0 then
-    []
+  extendPalette n seed targetQuality []
+
+
+extendPalette : Int -> Int -> Float -> List Color -> List Color
+extendPalette targetLength seed targetQuality palette =
+  if List.length palette >= targetLength then
+    palette
   else
     let
+        candidate = randomColor seed
+        candidateQuality = quality (candidate :: palette)
         nextSeed = seed |> MiniRandom.step
-        candidate =
-          (randomColor seed) :: (randomPalette (n-1) nextSeed targetQuality)
     in
-        if quality candidate >= targetQuality then
-          candidate
+        if candidateQuality < targetQuality then
+          extendPalette targetLength nextSeed (targetQuality * 0.99) palette
         else
-          randomPalette n nextSeed (targetQuality * 0.9)
+          extendPalette targetLength nextSeed targetQuality (candidate :: palette)
 
 
 rgbDistance : Color -> Color -> Float

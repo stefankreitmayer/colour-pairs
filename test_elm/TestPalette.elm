@@ -62,5 +62,10 @@ testPalette =
             randomPalette 2 0 0
             |> quality
             |> Expect.greaterThan 0
+
+        , test "can be large with decent quality" <| \() ->
+            randomPalette 100 0 0.01
+            |> quality
+            |> Expect.greaterThan 0.01
         ]
     ]
