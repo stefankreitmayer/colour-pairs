@@ -3,10 +3,13 @@ module Model exposing (..)
 import Dict exposing (Dict)
 import Date exposing (Date)
 import Time exposing (Time)
-import String
 
 import Model.Url exposing (Url(..))
 import Model.Screen exposing (Screen(..))
+import Model.Palette as Palette exposing (randomPalette,colorToString)
+
+import MiniRandom exposing (nextInt,step)
+
 
 type alias Model =
   { currentUrl : Url
@@ -36,36 +39,11 @@ initialModel =
   , currentTime = 0
   , nextRoundDue = Nothing
   , roundCounter = 0
-  , cards = newCards 222 0 }
+  , cards = newCards 0 0 }
 
 
 pauseBetweenRounds : Time
 pauseBetweenRounds = 3000
-
-
-randomColors : Int -> Int -> List String
-randomColors seed n =
-  if n<=0 then
-    []
-  else
-    (randomColor seed) :: (randomColors ((seed+123456789) % 900719925474099) (n-1))
-
-
-randomColor : Int -> String
-randomColor seed =
-  let
-      values =
-        [ randomInt seed 256
-        , randomInt (seed//2) 256
-        , randomInt (seed//3) 256 ]
-        |> List.map toString
-  in
-      "rgb(" ++ (String.join "," values) ++ ")"
-
-
-randomInt : Int -> Int -> Int
-randomInt seed upperLimit =
-  seed % upperLimit
 
 
 rotate : Int -> List a -> List a
@@ -86,13 +64,14 @@ newCards randomSeed roundCounter =
   let
       nCards = roundCounter // 2 * 2 + 4
       uniqueContents =
-        randomColors randomSeed (nCards-1)
+        randomPalette (nCards-1) randomSeed (1.0 / (toFloat nCards))
+        |> List.map colorToString
       duplicate = List.take 1 uniqueContents
       allContents =
         uniqueContents
-        |> rotate (randomInt randomSeed (nCards-1))
+        |> rotate (nextInt (nCards-1) randomSeed)
         |> List.append duplicate
-        |> rotate (randomInt (randomSeed//2) nCards)
+        |> rotate (nextInt nCards (randomSeed |> step))
   in
         allContents
         |> List.indexedMap (,)

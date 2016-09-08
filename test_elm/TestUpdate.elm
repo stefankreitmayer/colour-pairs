@@ -1,7 +1,7 @@
 module TestUpdate exposing (testUpdate)
 
 import Test exposing (Test,test,describe)
-import Expect exposing (Expectation)
+import Expect
 
 import Helpers.Stubs exposing (..)
 

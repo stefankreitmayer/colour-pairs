@@ -6,6 +6,8 @@ import Json.Encode exposing (Value)
 
 import TestModel exposing (testModel)
 import TestUpdate exposing (testUpdate)
+import TestPalette exposing (testPalette)
+import TestMiniRandom exposing (testMiniRandom)
 
 
 main : Program Value
@@ -16,7 +18,11 @@ main =
 completeSuite : Test
 completeSuite =
   describe "Elm Client"
-    [ testModel, testUpdate ]
+    [ testModel
+    , testUpdate
+    , testPalette
+    , testMiniRandom
+    ]
 
 
 port emit : ( String, Value ) -> Cmd msg
