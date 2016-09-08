@@ -10,8 +10,7 @@ import Touch exposing (..)
 
 type Msg
   = Navigate Page
-  | SelectCard EventOrigin Int
-  | UnselectCard EventOrigin Int
+  | ChangeSelection Int Bool EventOrigin
   | Tick Time
 
 

@@ -32,38 +32,23 @@ update action model =
       in
           (model', Navigation.newUrl pathname)
 
-    SelectCard eventOrigin key ->
-      if eventOrigin==FromMouse && model.assumeBrowserIsMobile then
-        (model, Cmd.none)
-      else
-        let
-            cards' = updateOneCard key (\card -> { card | selected = True } ) model.cards
-            selectedCards = cards' |> Dict.filter (\_ card -> card.selected)
-            (cards'', nextRoundDue) =
-              if isMatchingPair selectedCards then
-                (cards'
-                 |> Dict.map
-                      (\_ card -> { card
-                                  | position = if card.selected then (0.5, 0.5) else card.position
-                                  , fadeout = not card.selected })
-                , Just (model.currentTime + pauseBetweenRounds))
-              else
-                (cards', Nothing)
-        in
-            ({ model
-             | assumeBrowserIsMobile = eventOrigin == FromTouch || model.assumeBrowserIsMobile
-             , cards = cards''
-             , nextRoundDue = nextRoundDue }
-            , Cmd.none)
+    ChangeSelection key state eventOrigin ->
+      let
+          model' =
+            if eventOrigin == FromTouch then
+              { model | assumeBrowserIsMobile = True }
+            else
+              model
+      in
+          case model'.nextRoundDue of
+            Just _ ->
+              (model', Cmd.none)
 
-    UnselectCard eventOrigin key ->
-      if eventOrigin==FromMouse && model.assumeBrowserIsMobile then
-        (model, Cmd.none)
-      else
-        ({ model
-           | assumeBrowserIsMobile = eventOrigin == FromTouch || model.assumeBrowserIsMobile
-           , cards = updateOneCard key (\card -> { card | selected = False } ) model.cards }
-        , Cmd.none)
+            Nothing ->
+              if eventOrigin==FromMouse && model'.assumeBrowserIsMobile then
+                (model', Cmd.none)
+              else
+                (updateSelection key state model', Cmd.none)
 
     Tick currentTime ->
       let
@@ -118,3 +103,24 @@ updateOneCard key transformation cards =
           Just (card |> transformation)
     )
     cards
+
+
+updateSelection : Int -> Bool -> Model -> Model
+updateSelection key state model =
+  let
+      cards' = model.cards |> updateOneCard key (\card -> { card | selected = state } )
+      selectedCards = cards' |> Dict.filter (\_ card -> card.selected)
+      (cards'', nextRoundDue') =
+        if isMatchingPair selectedCards then
+          (cards'
+           |> Dict.map
+                (\_ card -> { card
+                            | position = if card.selected then (0.5, 0.5) else card.position
+                            , fadeout = not card.selected })
+          , Just (model.currentTime + pauseBetweenRounds))
+        else
+          (cards', Nothing)
+  in
+      { model
+      | cards = cards''
+      , nextRoundDue = nextRoundDue' }

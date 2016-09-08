@@ -42,14 +42,14 @@ renderCard (key, card) =
       (posX, posY) = card.position
       mousedownHandler =
         if card.selected then
-          onMouseDown (UnselectCard FromMouse key)
+          onMouseDown (ChangeSelection key False FromMouse)
         else
-          onMouseDown (SelectCard FromMouse key)
+          onMouseDown (ChangeSelection key True FromMouse)
       touchHandler =
         if card.selected then
-          onTouchStart (UnselectCard FromTouch key)
+          onTouchStart (ChangeSelection key False FromTouch)
         else
-          onTouchStart (SelectCard FromTouch key)
+          onTouchStart (ChangeSelection key True FromTouch)
       attrs =
         [ classList
             [ ("elm-card", True)

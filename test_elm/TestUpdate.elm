@@ -37,7 +37,7 @@ describeGame =
             | cards = stubCards [ (0, "A", False), (1, "B", False) ]
             }
           (model',_) =
-            model |> update (SelectCard FromMouse 1)
+            model |> update (ChangeSelection 1 True FromMouse)
       in
           model'.cards
           |> Expect.equal (stubCards [ (0, "A", False), (1, "B", True) ])
@@ -49,40 +49,40 @@ describeGame =
             | cards = stubCards [ (0, "A", True), (1, "B", True) ]
             }
           (model',_) =
-            model |> update (UnselectCard FromMouse 1)
+            model |> update (ChangeSelection 1 False FromMouse)
       in
           model'.cards
           |> Expect.equal (stubCards [ (0, "A", True), (1, "B", False) ])
 
   , describe "selecting a matching pair"
       (
-      let
-          card0 = Card "A" True (0,0) False
-          card1 = Card "B" False (0,0) False
-          card2 = Card "A" False (0,0) False
-          cards =
-            Dict.empty
-            |> Dict.insert 0 card0
-            |> Dict.insert 1 card1
-            |> Dict.insert 2 card2
-          currentTime = 1000.0
-          model = { newGame | cards = cards, currentTime = currentTime }
-          action = SelectCard FromMouse 2
-          (model',_) = model |> update action
-          expectedCards =
-            Dict.empty
-            |> Dict.insert 0 { card0 | position = (0.5,0.5) }
-            |> Dict.insert 1 { card1 | fadeout = True }
-            |> Dict.insert 2 { card2 | position = (0.5,0.5), selected = True }
-      in
-          [ test "moves the pair to the screen center" <| \() ->
-              model'.cards
-              |> Expect.equal expectedCards
+        let
+            card0 = Card "A" True (0,0) False
+            card1 = Card "B" False (0,0) False
+            card2 = Card "A" False (0,0) False
+            cards =
+              Dict.empty
+              |> Dict.insert 0 card0
+              |> Dict.insert 1 card1
+              |> Dict.insert 2 card2
+            currentTime = 1000.0
+            model = { newGame | cards = cards, currentTime = currentTime }
+            action = ChangeSelection 2 True FromMouse
+            (model',_) = model |> update action
+            expectedCards =
+              Dict.empty
+              |> Dict.insert 0 { card0 | position = (0.5,0.5) }
+              |> Dict.insert 1 { card1 | fadeout = True }
+              |> Dict.insert 2 { card2 | position = (0.5,0.5), selected = True }
+        in
+            [ test "moves the pair to the screen center" <| \() ->
+                model'.cards
+                |> Expect.equal expectedCards
 
-          , test "schedules next round" <| \() ->
-              model'.nextRoundDue
-              |> Expect.equal (Just (currentTime + pauseBetweenRounds))
-          ]
+            , test "schedules next round" <| \() ->
+                model'.nextRoundDue
+                |> Expect.equal (Just (currentTime + pauseBetweenRounds))
+            ]
       )
 
   , describe "new round"
