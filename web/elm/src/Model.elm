@@ -9,6 +9,7 @@ import Model.Page exposing (Page(..))
 
 type alias Model =
   { currentPage : Page
+  , assumeBrowserIsMobile : Bool
   , currentTime : Time
   , nextRoundDue : Maybe Time
   , roundCounter : Int
@@ -28,6 +29,7 @@ type alias Vector = (Float,Float)
 initialModel : Model
 initialModel =
   { currentPage = Home
+  , assumeBrowserIsMobile = False
   , currentTime = 0
   , nextRoundDue = Nothing
   , roundCounter = 0

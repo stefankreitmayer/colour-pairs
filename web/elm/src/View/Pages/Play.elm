@@ -1,8 +1,8 @@
 module View.Pages.Play exposing (view)
 
-import Html exposing (Html,text,div,h1,p,button)
-import Html.Attributes exposing (id,class,classList)
-import Html.Events exposing (onClick)
+import Html exposing (Html,div)
+import Html.Attributes exposing (class,classList)
+import Html.Events exposing (onMouseDown)
 import Html.Keyed
 import Dict exposing (Dict)
 import String
@@ -11,6 +11,7 @@ import Model exposing (..)
 import Model.Page exposing (Page(..))
 import View.Common exposing (..)
 import Msg exposing (..)
+import Touch exposing (..)
 
 
 view : Model -> Html Msg
@@ -39,6 +40,16 @@ renderCard : (Int, Card) -> Html Msg
 renderCard (key, card) =
   let
       (posX, posY) = card.position
+      mousedownHandler =
+        if card.selected then
+          onMouseDown (UnselectCard FromMouse key)
+        else
+          onMouseDown (SelectCard FromMouse key)
+      touchHandler =
+        if card.selected then
+          onTouchStart (UnselectCard FromTouch key)
+        else
+          onTouchStart (SelectCard FromTouch key)
       attrs =
         [ classList
             [ ("elm-card", True)
@@ -49,7 +60,9 @@ renderCard (key, card) =
             , ("left", posX |> toPercent)
             , ("background", card.content)
             ]
-        ] ++ (if card.selected then [] else [ onClick (SelectCard key) ])
+        , mousedownHandler
+        , touchHandler
+        ]
   in
       div
         attrs

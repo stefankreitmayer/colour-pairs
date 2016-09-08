@@ -5,12 +5,13 @@ import Time exposing (Time)
 
 import Model exposing (..)
 import Model.Page exposing (Page(..))
+import Touch exposing (..)
 
 
 type Msg
   = Navigate Page
-  | SelectCard Int
-  | UnselectCard Int
+  | SelectCard EventOrigin Int
+  | UnselectCard EventOrigin Int
   | Tick Time
 
 

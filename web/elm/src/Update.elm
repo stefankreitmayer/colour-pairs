@@ -8,6 +8,7 @@ import Navigation
 import Model exposing (..)
 import Model.Page exposing (Page(..))
 import Msg exposing (..)
+import Touch exposing (..)
 
 import Debug exposing (log)
 
@@ -31,30 +32,38 @@ update action model =
       in
           (model', Navigation.newUrl pathname)
 
-    SelectCard key ->
-      let
-          cards' = updateOneCard key (\card -> { card | selected = True } ) model.cards
-          selectedCards = cards' |> Dict.filter (\_ card -> card.selected)
-          (cards'', nextRoundDue) =
-            if isMatchingPair selectedCards then
-              (cards'
-               |> Dict.map
-                    (\_ card -> { card
-                                | position = if card.selected then (0.5, 0.5) else card.position
-                                , fadeout = not card.selected })
-              , Just (model.currentTime + pauseBetweenRounds))
-            else
-              (cards', Nothing)
-      in
-          ({ model
-           | cards = cards''
-           , nextRoundDue = nextRoundDue }
-          , Cmd.none)
+    SelectCard eventOrigin key ->
+      if eventOrigin==FromMouse && model.assumeBrowserIsMobile then
+        (model, Cmd.none)
+      else
+        let
+            cards' = updateOneCard key (\card -> { card | selected = True } ) model.cards
+            selectedCards = cards' |> Dict.filter (\_ card -> card.selected)
+            (cards'', nextRoundDue) =
+              if isMatchingPair selectedCards then
+                (cards'
+                 |> Dict.map
+                      (\_ card -> { card
+                                  | position = if card.selected then (0.5, 0.5) else card.position
+                                  , fadeout = not card.selected })
+                , Just (model.currentTime + pauseBetweenRounds))
+              else
+                (cards', Nothing)
+        in
+            ({ model
+             | assumeBrowserIsMobile = eventOrigin == FromTouch || model.assumeBrowserIsMobile
+             , cards = cards''
+             , nextRoundDue = nextRoundDue }
+            , Cmd.none)
 
-    UnselectCard key ->
-      ({ model
-         | cards = updateOneCard key (\card -> { card | selected = False } ) model.cards }
-      , Cmd.none)
+    UnselectCard eventOrigin key ->
+      if eventOrigin==FromMouse && model.assumeBrowserIsMobile then
+        (model, Cmd.none)
+      else
+        ({ model
+           | assumeBrowserIsMobile = eventOrigin == FromTouch || model.assumeBrowserIsMobile
+           , cards = updateOneCard key (\card -> { card | selected = False } ) model.cards }
+        , Cmd.none)
 
     Tick currentTime ->
       let

@@ -10,6 +10,7 @@ import Dict exposing (Dict)
 import Model exposing (..)
 import Model.Page exposing (Page(..))
 import Msg exposing (Msg(..))
+import Touch exposing (..)
 import Update exposing (update,urlUpdate)
 
 
@@ -36,7 +37,7 @@ describeGame =
             | cards = stubCards [ (0, "A", False), (1, "B", False) ]
             }
           (model',_) =
-            model |> update (SelectCard 1)
+            model |> update (SelectCard FromMouse 1)
       in
           model'.cards
           |> Expect.equal (stubCards [ (0, "A", False), (1, "B", True) ])
@@ -48,7 +49,7 @@ describeGame =
             | cards = stubCards [ (0, "A", True), (1, "B", True) ]
             }
           (model',_) =
-            model |> update (UnselectCard 1)
+            model |> update (UnselectCard FromMouse 1)
       in
           model'.cards
           |> Expect.equal (stubCards [ (0, "A", True), (1, "B", False) ])
@@ -66,7 +67,7 @@ describeGame =
             |> Dict.insert 2 card2
           currentTime = 1000.0
           model = { newGame | cards = cards, currentTime = currentTime }
-          action = SelectCard 2
+          action = SelectCard FromMouse 2
           (model',_) = model |> update action
           expectedCards =
             Dict.empty
