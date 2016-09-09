@@ -3,7 +3,7 @@ module TestUpdate exposing (testUpdate)
 import Test exposing (Test,test,describe)
 import Expect
 
-import Helpers.Stubs exposing (..)
+import Helpers.Factories exposing (..)
 
 import Dict exposing (Dict)
 
@@ -44,25 +44,25 @@ describeGame =
       let
           model =
             { newGame
-            | cards = stubCards [ (0, "A", False), (1, "B", False) ]
+            | cards = cardsFromFactory [ (0, "A", False), (1, "B", False) ]
             }
           (model',_) =
             model |> update (ChangeSelection 1 True FromMouse)
       in
           model'.cards
-          |> Expect.equal (stubCards [ (0, "A", False), (1, "B", True) ])
+          |> Expect.equal (cardsFromFactory [ (0, "A", False), (1, "B", True) ])
 
   , test "unselect a card" <| \() ->
       let
           model =
             { newGame
-            | cards = stubCards [ (0, "A", True), (1, "B", True) ]
+            | cards = cardsFromFactory [ (0, "A", True), (1, "B", True) ]
             }
           (model',_) =
             model |> update (ChangeSelection 1 False FromMouse)
       in
           model'.cards
-          |> Expect.equal (stubCards [ (0, "A", True), (1, "B", False) ])
+          |> Expect.equal (cardsFromFactory [ (0, "A", True), (1, "B", False) ])
 
   , describe "selecting a matching pair"
       (

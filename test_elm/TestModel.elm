@@ -5,7 +5,7 @@ import Expect
 
 import Dict exposing (Dict)
 
-import Helpers.Stubs exposing (..)
+import Helpers.Factories exposing (..)
 
 import Model exposing (..)
 import Model.Screen exposing (Screen(..))
@@ -71,7 +71,7 @@ testModel =
 
     , describe "helper function includesMatchingPair"
         [ test "negative case" <| \() ->
-          stubCards
+          cardsFromFactory
             [ (0, "A", False)
             , (1, "B", False)
             , (2, "C", False) ]
@@ -80,7 +80,7 @@ testModel =
           |> Expect.false "should be False"
 
         , test "positive case" <| \() ->
-          stubCards
+          cardsFromFactory
             [ (0, "A", False)
             , (1, "B", False)
             , (2, "A", False) ]
