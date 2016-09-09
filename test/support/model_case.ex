@@ -1,4 +1,4 @@
-defmodule MatchForever.ModelCase do
+defmodule ColourPairs.ModelCase do
   @moduledoc """
   This module defines the test case to be used by
   model tests.
@@ -16,20 +16,20 @@ defmodule MatchForever.ModelCase do
 
   using do
     quote do
-      alias MatchForever.Repo
+      alias ColourPairs.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import MatchForever.ModelCase
+      import ColourPairs.ModelCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(MatchForever.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(ColourPairs.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(MatchForever.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(ColourPairs.Repo, {:shared, self()})
     end
 
     :ok
@@ -59,7 +59,7 @@ defmodule MatchForever.ModelCase do
   """
   def errors_on(struct, data) do
     struct.__struct__.changeset(struct, data)
-    |> Ecto.Changeset.traverse_errors(&MatchForever.ErrorHelpers.translate_error/1)
+    |> Ecto.Changeset.traverse_errors(&ColourPairs.ErrorHelpers.translate_error/1)
     |> Enum.flat_map(fn {key, errors} -> for msg <- errors, do: {key, msg} end)
   end
 end

@@ -1,8 +1,8 @@
-defmodule MatchForever.Mixfile do
+defmodule ColourPairs.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :match_forever,
+    [app: :colour_pairs,
      version: "0.0.1",
      elixir: "~> 1.2",
      elixirc_paths: elixirc_paths(Mix.env),
@@ -17,7 +17,7 @@ defmodule MatchForever.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    [mod: {MatchForever, []},
+    [mod: {ColourPairs, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
                     :phoenix_ecto, :postgrex]]
   end

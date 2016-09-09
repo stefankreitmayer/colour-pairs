@@ -1,12 +1,12 @@
-defmodule MatchForever.Web do
+defmodule ColourPairs.Web do
   @moduledoc """
   A module that keeps using definitions for controllers,
   views and so on.
 
   This can be used in your application as:
 
-      use MatchForever.Web, :controller
-      use MatchForever.Web, :view
+      use ColourPairs.Web, :controller
+      use ColourPairs.Web, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -30,12 +30,12 @@ defmodule MatchForever.Web do
     quote do
       use Phoenix.Controller
 
-      alias MatchForever.Repo
+      alias ColourPairs.Repo
       import Ecto
       import Ecto.Query
 
-      import MatchForever.Router.Helpers
-      import MatchForever.Gettext
+      import ColourPairs.Router.Helpers
+      import ColourPairs.Gettext
     end
   end
 
@@ -49,9 +49,9 @@ defmodule MatchForever.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import MatchForever.Router.Helpers
-      import MatchForever.ErrorHelpers
-      import MatchForever.Gettext
+      import ColourPairs.Router.Helpers
+      import ColourPairs.ErrorHelpers
+      import ColourPairs.Gettext
     end
   end
 
@@ -65,10 +65,10 @@ defmodule MatchForever.Web do
     quote do
       use Phoenix.Channel
 
-      alias MatchForever.Repo
+      alias ColourPairs.Repo
       import Ecto
       import Ecto.Query
-      import MatchForever.Gettext
+      import ColourPairs.Gettext
     end
   end
 

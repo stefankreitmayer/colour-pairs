@@ -1,5 +1,5 @@
-defmodule MatchForever.ErrorView do
-  use MatchForever.Web, :view
+defmodule ColourPairs.ErrorView do
+  use ColourPairs.Web, :view
 
   def render("404.html", _assigns) do
     "Page not found"

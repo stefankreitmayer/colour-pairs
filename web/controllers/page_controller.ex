@@ -1,5 +1,5 @@
-defmodule MatchForever.PageController do
-  use MatchForever.Web, :controller
+defmodule ColourPairs.PageController do
+  use ColourPairs.Web, :controller
 
   def index(conn, _params) do
     render conn, "index.html"

@@ -1,3 +1,3 @@
-defmodule MatchForever.LayoutViewTest do
-  use MatchForever.ConnCase, async: true
+defmodule ColourPairs.LayoutViewTest do
+  use ColourPairs.ConnCase, async: true
 end

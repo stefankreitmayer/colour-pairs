@@ -1,4 +1,4 @@
-defmodule MatchForever.ErrorHelpers do
+defmodule ColourPairs.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -32,9 +32,9 @@ defmodule MatchForever.ErrorHelpers do
     #     dgettext "errors", "is invalid"
     #
     if count = opts[:count] do
-      Gettext.dngettext(MatchForever.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(ColourPairs.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(MatchForever.Gettext, "errors", msg, opts)
+      Gettext.dgettext(ColourPairs.Gettext, "errors", msg, opts)
     end
   end
 end

@@ -1,3 +1,3 @@
-defmodule MatchForever.LayoutView do
-  use MatchForever.Web, :view
+defmodule ColourPairs.LayoutView do
+  use ColourPairs.Web, :view
 end

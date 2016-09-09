@@ -1,4 +1,4 @@
-defmodule MatchForever.ConnCase do
+defmodule ColourPairs.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -20,23 +20,23 @@ defmodule MatchForever.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
 
-      alias MatchForever.Repo
+      alias ColourPairs.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
 
-      import MatchForever.Router.Helpers
+      import ColourPairs.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint MatchForever.Endpoint
+      @endpoint ColourPairs.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(MatchForever.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(ColourPairs.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(MatchForever.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(ColourPairs.Repo, {:shared, self()})
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}

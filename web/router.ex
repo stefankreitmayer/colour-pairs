@@ -1,5 +1,5 @@
-defmodule MatchForever.Router do
-  use MatchForever.Web, :router
+defmodule ColourPairs.Router do
+  use ColourPairs.Web, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,14 +13,14 @@ defmodule MatchForever.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", MatchForever do
+  scope "/", ColourPairs do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", MatchForever do
+  # scope "/api", ColourPairs do
   #   pipe_through :api
   # end
 end

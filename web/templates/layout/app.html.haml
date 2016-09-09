@@ -7,30 +7,11 @@
     %meta(name="description" content="")
     %meta(name="author" content="")
 
-    %title Match Forever
+    %title Colour Pairs
     %link(rel="stylesheet" href='#{static_path(@conn, "/css/app.css")}')
     %script(src='#{static_path(@conn, "/js/app.js")}')
 
   %body
     .container
-      %header.header
-        %nav(role="navigation")
-          -# %ul.nav.nav-pills.pull-right
-          -#   - if logged_in?(@conn) do
-          -#     %li.logged-in-user-name
-          -#       = "#{current_user(@conn).first} #{current_user(@conn).last}"
-          -#     %li
-          -#       = link "Logout", to: session_path(@conn, :delete), method: :delete
-          -#   - else
-          -#     = link "Login", to: session_path(@conn, :new), class: "button"
-          %a{href: '/'}
-            %span.logo
-
-      .alert-boxes
-        %p.alert.alert-success(role="alert")= get_flash(@conn, :success)
-        %p.alert.alert-info(role="alert")= get_flash(@conn, :info)
-        %p.alert.alert-warning(role="alert")= get_flash(@conn, :warning)
-        %p.alert.alert-danger(role="alert")= get_flash(@conn, :error)
-
       %main(role="main")
         = render @view_module, @view_template, assigns

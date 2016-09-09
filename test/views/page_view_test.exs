@@ -1,3 +1,3 @@
-defmodule MatchForever.PageViewTest do
-  use MatchForever.ConnCase, async: true
+defmodule ColourPairs.PageViewTest do
+  use ColourPairs.ConnCase, async: true
 end

@@ -1,5 +1,5 @@
-defmodule MatchForever.PageControllerTest do
-  use MatchForever.ConnCase
+defmodule ColourPairs.PageControllerTest do
+  use ColourPairs.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get conn, "/"

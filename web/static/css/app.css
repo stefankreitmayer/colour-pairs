@@ -1,14 +1,1 @@
 /* This file is for your main application css. */
-
-/* Custom page header */
-.header {
-  border-bottom: 1px solid #e5e5e5;
-}
-.logo {
-  width: 320px;
-  height: 51px;
-  display: inline-block;
-  margin-bottom: 1em;
-  background-image: url("/images/match_forever.png");
-  background-size: 320px 51px;
-}

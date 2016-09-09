@@ -1,4 +1,4 @@
-defmodule MatchForever.ChannelCase do
+defmodule ColourPairs.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -20,22 +20,22 @@ defmodule MatchForever.ChannelCase do
       # Import conveniences for testing with channels
       use Phoenix.ChannelTest
 
-      alias MatchForever.Repo
+      alias ColourPairs.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
 
 
       # The default endpoint for testing
-      @endpoint MatchForever.Endpoint
+      @endpoint ColourPairs.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(MatchForever.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(ColourPairs.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(MatchForever.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(ColourPairs.Repo, {:shared, self()})
     end
 
     :ok

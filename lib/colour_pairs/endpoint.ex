@@ -1,14 +1,14 @@
-defmodule MatchForever.Endpoint do
-  use Phoenix.Endpoint, otp_app: :match_forever
+defmodule ColourPairs.Endpoint do
+  use Phoenix.Endpoint, otp_app: :colour_pairs
 
-  socket "/socket", MatchForever.UserSocket
+  socket "/socket", ColourPairs.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :match_forever, gzip: false,
+    at: "/", from: :colour_pairs, gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
@@ -35,8 +35,8 @@ defmodule MatchForever.Endpoint do
   # Set :encryption_salt if you would also like to encrypt it.
   plug Plug.Session,
     store: :cookie,
-    key: "_match_forever_key",
+    key: "_colour_pairs_key",
     signing_salt: "kRyLPoYl"
 
-  plug MatchForever.Router
+  plug ColourPairs.Router
 end
