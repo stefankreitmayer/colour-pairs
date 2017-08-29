@@ -1,4 +1,4 @@
-# Match Forever
+# Colour Pairs
 
 A collaborative, two-player browser game for mobile devices.
 
