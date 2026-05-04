@@ -163,16 +163,22 @@ function nextRound() {
 function renderWelcome() {
   app.innerHTML = `
     <section class="welcome" aria-labelledby="game-title">
-      <div>
-        <p class="eyebrow">Two-player tablet game</p>
+      <div class="welcome-stack">
         <h1 id="game-title">Colour Pairs</h1>
-        <p class="goal">Select the two matching colours. Each round adds more choices.</p>
+        <button class="play-button" type="button">Play</button>
+        <div class="welcome-copy">
+          <p class="goal">Find the matching colours across the screen.</p>
+          <p class="note">Gets harder every round.</p>
+        </div>
       </div>
-      <button class="play-button" type="button">Play</button>
     </section>
   `;
 
-  app.querySelector(".play-button").addEventListener("click", startGame, { passive: true });
+  app.querySelector(".welcome").addEventListener("click", startGame, { passive: true });
+  app.querySelector(".play-button").addEventListener("click", (event) => {
+    event.stopPropagation();
+    startGame();
+  }, { passive: true });
 }
 
 function syncCardButton(button, card) {

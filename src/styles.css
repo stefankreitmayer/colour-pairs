@@ -40,54 +40,60 @@ button {
   min-height: 100vh;
   min-height: 100svh;
   display: grid;
-  grid-template-rows: 1fr auto;
-  align-items: center;
-  gap: 2rem;
+  place-items: center;
   padding:
-    max(2rem, env(safe-area-inset-top))
-    max(1.25rem, env(safe-area-inset-right))
-    max(2rem, env(safe-area-inset-bottom))
-    max(1.25rem, env(safe-area-inset-left));
-  background: #f8f7f2;
+    max(3rem, env(safe-area-inset-top))
+    max(1.5rem, env(safe-area-inset-right))
+    max(2.25rem, env(safe-area-inset-bottom))
+    max(1.5rem, env(safe-area-inset-left));
+  background: #fffefa;
+  cursor: pointer;
 }
 
-.welcome > div,
-.play-button {
-  width: min(100%, 34rem);
-  justify-self: center;
+.welcome-stack {
+  width: min(100%, 46rem);
+  display: grid;
+  justify-items: center;
+  gap: clamp(1.35rem, 3.8vh, 2.6rem);
 }
 
-.eyebrow {
-  margin: 0 0 0.75rem;
-  color: #696258;
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0;
-  text-transform: uppercase;
+.welcome-copy {
+  width: min(100%, 28rem);
+  text-align: center;
 }
 
 h1 {
   margin: 0;
-  font-size: clamp(3rem, 10vh, 6rem);
-  line-height: 0.95;
+  font-size: clamp(3.5rem, 8.6vmin, 7rem);
+  line-height: 0.92;
   letter-spacing: 0;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .goal {
-  max-width: 28rem;
-  margin: 1rem 0 0;
+  margin: 0;
   color: #4b443b;
-  font-size: 1.2rem;
+  font-size: clamp(1.1rem, 2.1vh, 1.35rem);
   line-height: 1.45;
 }
 
+.note {
+  margin: 0.75rem 0 0;
+  color: #80796e;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
 .play-button {
-  min-height: 6rem;
+  width: min(100%, 34rem);
+  min-height: clamp(5.5rem, 11vh, 7.5rem);
   border: 0;
   border-radius: 0.5rem;
   background: #278244;
   color: white;
-  font-size: 1.6rem;
+  font-size: clamp(1.5rem, 3vh, 2rem);
   font-weight: 800;
   cursor: pointer;
   touch-action: manipulation;
@@ -96,6 +102,12 @@ h1 {
 
 .play-button:active {
   transform: translateY(2px);
+}
+
+@media (max-width: 680px) {
+  h1 {
+    white-space: normal;
+  }
 }
 
 .board {

@@ -16,6 +16,7 @@ const requiredCss = [
   "top 2000ms",
   "left 2000ms",
   "box-shadow 2000ms",
+  "background: #fffefa",
   "will-change",
 ];
 const requiredJs = [
@@ -27,6 +28,7 @@ const requiredJs = [
   "rightDuplicateRow",
   "MATCH_ANIMATION_MS = 2000",
   "MATCH_HOLD_MS = 500",
+  "Gets harder every round.",
 ];
 
 async function read(path) {
