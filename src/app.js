@@ -266,8 +266,10 @@ function createBoard() {
   const status = document.createElement("div");
   status.className = "round-status";
   status.innerHTML = `
-    <span class="round-counter"></span>
-    <button class="restart-button" type="button" aria-label="Restart game">↻</button>
+    <button class="restart-button" type="button" aria-label="Restart game">
+      <span class="round-counter"></span>
+      <span class="restart-icon" aria-hidden="true">↻</span>
+    </button>
   `;
   status.querySelector(".round-counter").textContent = roundStatusText();
   status.querySelector(".restart-button").addEventListener("click", requestRestart, { passive: true });
@@ -288,6 +290,7 @@ function renderPlay() {
   board.style.setProperty("--rows", String(state.cards.length / 2));
   board.querySelector(".round-counter").textContent = roundStatusText();
   board.querySelector(".restart-button").classList.toggle("is-confirming", state.restartConfirm);
+  board.querySelector(".restart-icon").hidden = state.restartConfirm;
 
   const buttonsById = new Map(
     [...board.querySelectorAll(".card")].map((button) => [button.dataset.cardId, button]),

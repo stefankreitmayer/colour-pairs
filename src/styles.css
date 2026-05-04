@@ -129,46 +129,43 @@ h1 {
   top: max(0.75rem, env(safe-area-inset-top));
   left: 50%;
   z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
   transform: translateX(-50%);
+}
+
+.restart-button {
+  min-width: 10.75rem;
+  min-height: 2.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0 0.7rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
   color: #6c665b;
   font-size: 0.9rem;
   font-weight: 800;
   letter-spacing: 0;
-}
-
-.round-counter {
-  min-width: 8.75rem;
-  text-align: right;
-  pointer-events: none;
-}
-
-.restart-button {
-  width: 2.35rem;
-  height: 2.35rem;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  color: #9a9286;
-  font-size: 1.1rem;
-  font-weight: 900;
   line-height: 1;
   cursor: pointer;
   touch-action: manipulation;
 }
 
 .restart-button.is-confirming {
+  min-width: 12.5rem;
   color: #4b443b;
   background: rgb(25 23 19 / 0.06);
 }
 
 .restart-button:active {
   transform: scale(0.94);
+}
+
+.restart-icon {
+  color: #9a9286;
+  font-size: 1.1rem;
+  font-weight: 900;
 }
 
 .card {
