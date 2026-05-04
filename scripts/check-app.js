@@ -15,6 +15,7 @@ const requiredCss = [
   "76svh",
   "top 1000ms",
   "left 1000ms",
+  "box-shadow 1000ms",
   "will-change",
 ];
 const requiredJs = [

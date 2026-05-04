@@ -162,6 +162,15 @@ h1 {
     0 1rem 2rem rgb(30 25 15 / 0.2);
 }
 
+.card.is-selected.is-matched {
+  transition:
+    top 1000ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    left 1000ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 150ms ease,
+    box-shadow 1000ms ease;
+  box-shadow: none;
+}
+
 .card.is-fading {
   opacity: 0;
 }
