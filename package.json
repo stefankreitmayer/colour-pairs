@@ -1,23 +1,13 @@
 {
-  "repository": {},
+  "name": "colour-pairs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A lightweight two-player colour matching game for tablets.",
   "license": "MIT",
+  "type": "module",
   "scripts": {
-    "deploy": "brunch build --production",
-    "watch": "brunch watch --stdin"
-  },
-  "dependencies": {
-    "phoenix": "file:deps/phoenix",
-    "phoenix_html": "file:deps/phoenix_html"
-  },
-  "devDependencies": {
-    "babel-brunch": "~6.0.0",
-    "brunch": "2.7.4",
-    "clean-css-brunch": "~2.0.0",
-    "css-brunch": "~2.0.0",
-    "elm": "^0.17.0",
-    "elm-brunch": "^0.5.0",
-    "elm-test": "^0.17.3",
-    "javascript-brunch": "~2.0.0",
-    "uglify-js-brunch": "~2.0.1"
+    "start": "python3 -m http.server 4000",
+    "build": "node scripts/check-app.js",
+    "test": "node scripts/check-app.js"
   }
 }
