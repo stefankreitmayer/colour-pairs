@@ -149,6 +149,8 @@ function startGame() {
 }
 
 function requestRestart() {
+  if (state.round === 0) return;
+
   if (state.restartConfirm) {
     startGame();
     return;
@@ -168,6 +170,40 @@ function requestRestart() {
 
 function roundStatusText() {
   return state.restartConfirm ? "Tap again to restart" : `Round ${state.round + 1}`;
+}
+
+function syncRoundStatus(status) {
+  status.replaceChildren();
+
+  if (state.round === 0) {
+    const label = document.createElement("span");
+    label.className = "round-label";
+    label.textContent = roundStatusText();
+    status.append(label);
+    return;
+  }
+
+  const button = document.createElement("button");
+  button.className = "restart-button";
+  button.classList.toggle("is-confirming", state.restartConfirm);
+  button.type = "button";
+  button.setAttribute("aria-label", "Restart game");
+
+  const label = document.createElement("span");
+  label.className = "round-counter";
+  label.textContent = roundStatusText();
+  button.append(label);
+
+  if (!state.restartConfirm) {
+    const icon = document.createElement("span");
+    icon.className = "restart-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = "↻";
+    button.append(icon);
+  }
+
+  button.addEventListener("click", requestRestart, { passive: true });
+  status.append(button);
 }
 
 function toggleCard(cardId) {
@@ -265,14 +301,7 @@ function createBoard() {
 
   const status = document.createElement("div");
   status.className = "round-status";
-  status.innerHTML = `
-    <button class="restart-button" type="button" aria-label="Restart game">
-      <span class="round-counter"></span>
-      <span class="restart-icon" aria-hidden="true">↻</span>
-    </button>
-  `;
-  status.querySelector(".round-counter").textContent = roundStatusText();
-  status.querySelector(".restart-button").addEventListener("click", requestRestart, { passive: true });
+  syncRoundStatus(status);
   board.append(status, ...state.cards.map(createCardButton));
 
   return board;
@@ -288,9 +317,7 @@ function renderPlay() {
 
   board.setAttribute("aria-label", `Round ${state.round + 1}`);
   board.style.setProperty("--rows", String(state.cards.length / 2));
-  board.querySelector(".round-counter").textContent = roundStatusText();
-  board.querySelector(".restart-button").classList.toggle("is-confirming", state.restartConfirm);
-  board.querySelector(".restart-icon").hidden = state.restartConfirm;
+  syncRoundStatus(board.querySelector(".round-status"));
 
   const buttonsById = new Map(
     [...board.querySelectorAll(".card")].map((button) => [button.dataset.cardId, button]),

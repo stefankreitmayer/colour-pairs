@@ -17,6 +17,7 @@ const requiredCss = [
   "left 2000ms",
   "box-shadow 2000ms",
   "background: #fffefa",
+  ".round-label",
   ".restart-button",
   "will-change",
 ];

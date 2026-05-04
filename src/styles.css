@@ -132,6 +132,20 @@ h1 {
   transform: translateX(-50%);
 }
 
+.round-label {
+  min-height: 2.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.7rem;
+  color: #6c665b;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+  pointer-events: none;
+}
+
 .restart-button {
   min-width: 10.75rem;
   min-height: 2.35rem;
