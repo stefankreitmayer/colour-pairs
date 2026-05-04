@@ -1,14 +1,33 @@
 const MATCH_ANIMATION_MS = 2000;
 const MATCH_HOLD_MS = 500;
 const ROUND_PAUSE_MS = MATCH_ANIMATION_MS + MATCH_HOLD_MS;
+const RESTART_CONFIRM_MS = 3000;
 const app = document.querySelector("#app");
+let restartConfirmTimer = null;
+let nextRoundTimer = null;
 
 let state = {
   screen: "welcome",
   round: 0,
   cards: [],
   locked: false,
+  restartConfirm: false,
 };
+
+function clearRestartConfirm() {
+  if (restartConfirmTimer) {
+    window.clearTimeout(restartConfirmTimer);
+    restartConfirmTimer = null;
+  }
+  state.restartConfirm = false;
+}
+
+function clearNextRound() {
+  if (nextRoundTimer) {
+    window.clearTimeout(nextRoundTimer);
+    nextRoundTimer = null;
+  }
+}
 
 function step(seed) {
   return (seed * 7621 + 1) % 32768;
@@ -117,13 +136,38 @@ function createCards(round, seed = Math.floor(performance.now() / 100)) {
 }
 
 function startGame() {
+  clearRestartConfirm();
+  clearNextRound();
   state = {
     screen: "play",
     round: 0,
     cards: createCards(0, 0),
     locked: false,
+    restartConfirm: false,
   };
   render();
+}
+
+function requestRestart() {
+  if (state.restartConfirm) {
+    startGame();
+    return;
+  }
+
+  state.restartConfirm = true;
+  if (restartConfirmTimer) {
+    window.clearTimeout(restartConfirmTimer);
+  }
+  restartConfirmTimer = window.setTimeout(() => {
+    state.restartConfirm = false;
+    restartConfirmTimer = null;
+    render();
+  }, RESTART_CONFIRM_MS);
+  render();
+}
+
+function roundStatusText() {
+  return state.restartConfirm ? "Tap again to restart" : `Round ${state.round + 1}`;
 }
 
 function toggleCard(cardId) {
@@ -141,21 +185,25 @@ function toggleCard(cardId) {
         ? { ...card, matched: true, x: 0.5, y: 0.5 }
         : { ...card, fading: true }
     ));
-    window.setTimeout(nextRound, ROUND_PAUSE_MS);
+    clearNextRound();
+    nextRoundTimer = window.setTimeout(nextRound, ROUND_PAUSE_MS);
   }
 
   render();
 }
 
 function nextRound() {
+  nextRoundTimer = null;
   if (!state.locked) return;
 
+  clearRestartConfirm();
   const next = state.round + 1;
   state = {
     screen: "play",
     round: next,
     cards: createCards(next),
     locked: false,
+    restartConfirm: false,
   };
   render();
 }
@@ -216,8 +264,13 @@ function createBoard() {
   board.style.setProperty("--rows", String(state.cards.length / 2));
 
   const status = document.createElement("div");
-  status.className = "round-counter";
-  status.textContent = `Round ${state.round + 1}`;
+  status.className = "round-status";
+  status.innerHTML = `
+    <span class="round-counter"></span>
+    <button class="restart-button" type="button" aria-label="Restart game">↻</button>
+  `;
+  status.querySelector(".round-counter").textContent = roundStatusText();
+  status.querySelector(".restart-button").addEventListener("click", requestRestart, { passive: true });
   board.append(status, ...state.cards.map(createCardButton));
 
   return board;
@@ -233,7 +286,8 @@ function renderPlay() {
 
   board.setAttribute("aria-label", `Round ${state.round + 1}`);
   board.style.setProperty("--rows", String(state.cards.length / 2));
-  board.querySelector(".round-counter").textContent = `Round ${state.round + 1}`;
+  board.querySelector(".round-counter").textContent = roundStatusText();
+  board.querySelector(".restart-button").classList.toggle("is-confirming", state.restartConfirm);
 
   const buttonsById = new Map(
     [...board.querySelectorAll(".card")].map((button) => [button.dataset.cardId, button]),

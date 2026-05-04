@@ -17,6 +17,7 @@ const requiredCss = [
   "left 2000ms",
   "box-shadow 2000ms",
   "background: #fffefa",
+  ".restart-button",
   "will-change",
 ];
 const requiredJs = [
@@ -28,6 +29,8 @@ const requiredJs = [
   "rightDuplicateRow",
   "MATCH_ANIMATION_MS = 2000",
   "MATCH_HOLD_MS = 500",
+  "RESTART_CONFIRM_MS = 3000",
+  "Tap again to restart",
   "Gets harder every round.",
 ];
 
