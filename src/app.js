@@ -173,41 +173,67 @@ function renderWelcome() {
   app.querySelector(".play-button").addEventListener("click", startGame, { passive: true });
 }
 
-function renderPlay() {
+function syncCardButton(button, card) {
+  button.dataset.cardId = card.id;
+  button.style.setProperty("--x", card.x);
+  button.style.setProperty("--y", card.y);
+  button.style.background = card.color;
+  button.setAttribute("aria-label", card.selected ? "Selected colour" : "Colour");
+  button.setAttribute("aria-pressed", String(card.selected));
+  button.classList.toggle("is-selected", card.selected);
+  button.classList.toggle("is-matched", card.matched);
+  button.classList.toggle("is-fading", card.fading);
+}
+
+function createCardButton(card) {
+  const button = document.createElement("button");
+  button.className = "card";
+  button.type = "button";
+  syncCardButton(button, card);
+
+  button.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    button.setPointerCapture(event.pointerId);
+    toggleCard(button.dataset.cardId);
+  });
+
+  return button;
+}
+
+function createBoard() {
   const board = document.createElement("section");
   board.className = "board";
+  board.dataset.round = String(state.round);
   board.setAttribute("aria-label", `Round ${state.round + 1}`);
   board.style.setProperty("--rows", String(state.cards.length / 2));
 
   const status = document.createElement("div");
   status.className = "round-counter";
   status.textContent = `Round ${state.round + 1}`;
-  board.append(status);
+  board.append(status, ...state.cards.map(createCardButton));
 
-  for (const card of state.cards) {
-    const button = document.createElement("button");
-    button.className = "card";
-    button.type = "button";
-    button.style.setProperty("--x", card.x);
-    button.style.setProperty("--y", card.y);
-    button.style.background = card.color;
-    button.setAttribute("aria-label", card.selected ? "Selected colour" : "Colour");
-    button.setAttribute("aria-pressed", String(card.selected));
+  return board;
+}
 
-    if (card.selected) button.classList.add("is-selected");
-    if (card.matched) button.classList.add("is-matched");
-    if (card.fading) button.classList.add("is-fading");
+function renderPlay() {
+  const board = app.querySelector(".board");
 
-    button.addEventListener("pointerdown", (event) => {
-      event.preventDefault();
-      button.setPointerCapture(event.pointerId);
-      toggleCard(card.id);
-    });
-
-    board.append(button);
+  if (!board || board.dataset.round !== String(state.round)) {
+    app.replaceChildren(createBoard());
+    return;
   }
 
-  app.replaceChildren(board);
+  board.setAttribute("aria-label", `Round ${state.round + 1}`);
+  board.style.setProperty("--rows", String(state.cards.length / 2));
+  board.querySelector(".round-counter").textContent = `Round ${state.round + 1}`;
+
+  const buttonsById = new Map(
+    [...board.querySelectorAll(".card")].map((button) => [button.dataset.cardId, button]),
+  );
+
+  for (const card of state.cards) {
+    syncCardButton(buttonsById.get(card.id), card);
+  }
 }
 
 function render() {
