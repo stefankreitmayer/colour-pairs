@@ -1,4 +1,6 @@
-const ROUND_PAUSE_MS = 1250;
+const MATCH_ANIMATION_MS = 2000;
+const MATCH_HOLD_MS = 500;
+const ROUND_PAUSE_MS = MATCH_ANIMATION_MS + MATCH_HOLD_MS;
 const app = document.querySelector("#app");
 
 let state = {

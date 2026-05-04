@@ -13,9 +13,9 @@ const requiredCss = [
   "env(safe-area-inset-top)",
   "--card-size",
   "76svh",
-  "top 1000ms",
-  "left 1000ms",
-  "box-shadow 1000ms",
+  "top 2000ms",
+  "left 2000ms",
+  "box-shadow 2000ms",
   "will-change",
 ];
 const requiredJs = [
@@ -25,6 +25,8 @@ const requiredJs = [
   "randomPalette",
   "leftDuplicateRow",
   "rightDuplicateRow",
+  "MATCH_ANIMATION_MS = 2000",
+  "MATCH_HOLD_MS = 500",
 ];
 
 async function read(path) {
