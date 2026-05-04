@@ -2,7 +2,7 @@
 
 A lightweight, two-player colour matching game designed for tablets.
 
-The app is now plain HTML, CSS, and modern JavaScript. There is no build
+The app is plain HTML, CSS, and modern JavaScript. There is no build
 pipeline, framework runtime, database, or package dependency.
 
 ## Run
