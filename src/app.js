@@ -1,4 +1,4 @@
-const ROUND_PAUSE_MS = 1400;
+const ROUND_PAUSE_MS = 1250;
 const app = document.querySelector("#app");
 
 let state = {
@@ -84,11 +84,28 @@ function createCards(round, seed = Math.floor(performance.now() / 100)) {
   const count = Math.floor(round / 2) * 2 + 4;
   const rows = count / 2;
   const unique = randomPalette(count - 1, seed, 1 / count);
-  const contents = rotate([unique[0], ...rotate(unique, nextInt(count - 1, seed))], nextInt(count, step(seed)));
+  const duplicate = unique[0];
+  const left = Array(rows);
+  const right = Array(rows);
+  const leftDuplicateRow = nextInt(rows, seed);
+  const rightDuplicateRow = nextInt(rows, step(seed));
+  const remaining = rotate(unique.slice(1), nextInt(count - 2, step(step(seed))));
 
-  return contents.map((color, index) => ({
+  left[leftDuplicateRow] = duplicate;
+  right[rightDuplicateRow] = duplicate;
+
+  for (const side of [left, right]) {
+    for (let row = 0; row < rows; row += 1) {
+      if (!side[row]) {
+        side[row] = remaining.shift();
+      }
+    }
+  }
+
+  return [...left, ...right].map((color, index) => ({
     id: `${round}-${index}-${color}`,
     color,
+    side: index < rows ? "left" : "right",
     selected: false,
     matched: false,
     fading: false,

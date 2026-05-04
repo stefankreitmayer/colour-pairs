@@ -13,6 +13,8 @@ const requiredCss = [
   "env(safe-area-inset-top)",
   "--card-size",
   "76svh",
+  "top 1000ms",
+  "left 1000ms",
   "will-change",
 ];
 const requiredJs = [
@@ -20,6 +22,8 @@ const requiredJs = [
   "setPointerCapture",
   "createCards",
   "randomPalette",
+  "leftDuplicateRow",
+  "rightDuplicateRow",
 ];
 
 async function read(path) {
@@ -43,6 +47,10 @@ const [html, js, css] = await Promise.all(requiredFiles.map(read));
 assertIncludes(html, requiredHtml, "index.html");
 assertIncludes(js, requiredJs, "src/app.js");
 assertIncludes(css, requiredCss, "src/styles.css");
+
+if (css.includes("0 0 0 0.35rem #191713")) {
+  throw new Error("Selected cards should not use the old black outline");
+}
 
 const tabletViewports = [
   { name: "iPad portrait", width: 820, height: 1180 },
